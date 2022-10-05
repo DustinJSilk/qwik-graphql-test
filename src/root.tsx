@@ -12,7 +12,7 @@ import './global.css';
 
 export default component$(() => {
   const clientOptions: ClientOptions = {
-    url: 'https://swapi-graphql.netlify.app/.netlify/functions/index',
+    url: 'http://localhost:3000/graphql',
   };
 
   return (

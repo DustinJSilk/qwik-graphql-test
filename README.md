@@ -4,6 +4,8 @@ Attempts at using GraphQL with Qwik.
 
 This requires a pre-release version of Qwik. Manually build a production version and update your node modules.
 
+Run the server using `node ./server/main.js` which supports some basic queries and mutations
+
 ### Limitations
 
 - The GraphQL client cant be serialized so it can't be accessible to the whole app using Qwik context. Currently I'm storing it in the Window on the frontend and recreating it with each request on the server
@@ -18,6 +20,5 @@ Need to figure a few things out before I clean up and get things added to Urql/Q
 - Authentication & sharing a header between frontend and server
 - Mutations
 - Optimistic response
+- Need to be able to create the gql client in the root app to allow custom exchanges. Stop using context + provide
 - Cache reactivity
-
-I'm using this public GraphQL API for testing `https://swapi-graphql.netlify.app/.netlify/functions/index`

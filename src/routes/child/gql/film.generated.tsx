@@ -15,7 +15,7 @@ export type Film = {
 };
 
 export const FilmQuery = gql`
-  query Query($id: ID!) {
+  query Query($id: String!) {
     film(id: $id) {
       id
       title
