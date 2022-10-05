@@ -6,6 +6,7 @@ import {
   useResource$,
 } from '@builder.io/qwik';
 import { AnyVariables, gql, OperationResult } from '@urql/core';
+import { fetchWithAbort } from '~/components/urql/fetch-with-abort';
 import { getClient } from '../../../components/urql/get-client';
 import {
   UrqlCacheContext,
@@ -38,7 +39,7 @@ export const FilmResource = component$((props: FilmResourceProps) => {
   const vars = props.vars;
 
   const resource = useResource$<OperationResult<Film, AnyVariables>>(
-    async ({ track }) => {
+    async ({ track, cleanup }) => {
       track(vars, 'id');
 
       const FilmQuery = gql`
@@ -52,8 +53,19 @@ export const FilmResource = component$((props: FilmResourceProps) => {
 
       const client = getClient(options, initialCacheState);
 
+      const abortCtrl = new AbortController();
+      cleanup(() => abortCtrl.abort());
+
       console.log('Running query');
-      return client.query<Film>(FilmQuery, vars).toPromise();
+      const res = await client
+        .query<Film>(FilmQuery, vars, {
+          fetch: fetchWithAbort(abortCtrl),
+        })
+        .toPromise();
+
+      delete res.operation.context.fetch;
+
+      return res;
     }
   );
 
