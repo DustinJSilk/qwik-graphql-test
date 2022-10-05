@@ -18,7 +18,6 @@ Need to figure a few things out before I clean up and get things added to Urql/Q
 
 - ~~Do we need to track each primitive in the useResource$ or can we track the entire store?~~ Seems to work, need to test recursion
 - Authentication & sharing a header between frontend and server
-- Mutations
-- Optimistic response
 - Need to be able to create the gql client in the root app to allow custom exchanges. Stop using context + provide
 - Cache reactivity
+- Optimistic response (pretty much relyings on a reactive cache)
