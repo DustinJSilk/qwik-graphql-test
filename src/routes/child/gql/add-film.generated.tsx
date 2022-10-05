@@ -26,6 +26,7 @@ export const AddFilmMutation = gql`
   mutation AddFilm($input: AddFilmInput!) {
     addFilm(input: $input) {
       title
+      id
     }
   }
 `;

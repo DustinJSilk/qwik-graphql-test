@@ -60,7 +60,6 @@ export default component$(() => {
 
         <li>
           Add film title to show ID:
-          {storeB.input.title}
           <input type='text' value={storeB.input.title} ref={titleRef} />
           <button
             onKeyUp$={() =>

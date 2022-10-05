@@ -4,5 +4,6 @@
 mutation AddFilm($input: AddFilmInput!) {
   addFilm(input: $input) {
     title
+    id
   }
 }
