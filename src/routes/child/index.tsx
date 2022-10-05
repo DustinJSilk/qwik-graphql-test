@@ -25,10 +25,7 @@ export default component$(() => {
   `);
 
   const storeA = useStore({ id: '0' });
-  const storeB = useStore(
-    { input: { title: 'Newly added' } },
-    { recursive: true }
-  );
+  const storeB = useStore({ input: { title: 'Newly added' } });
   const titleRef = useRef();
 
   return (
@@ -63,9 +60,9 @@ export default component$(() => {
           <input type='text' value={storeB.input.title} ref={titleRef} />
           <button
             onClick$={() =>
-              (storeB.input.title = (
-                titleRef.current as HTMLInputElement
-              ).value)
+              (storeB.input = {
+                title: (titleRef.current as HTMLInputElement).value,
+              })
             }
           >
             Add
