@@ -8,7 +8,7 @@ This requires a pre-release version of Qwik. Manually build a production version
 
 - The GraphQL client cant be serialized so it can't be accessible to the whole app using Qwik context. Currently I'm storing it in the Window on the frontend and recreating it with each request on the server
 - To share the cache between the frontend/backend we need the data saved in a Qwik store. I've copied Urqls ssrExchange and added an option to inject a store.
-- useResource$ has to be in a component$ which means we can't create custom use- methods for each query like you would in React. So instead I've opted to copying Qwiks `<Resource />` component. Its quite verbose but this can easily be solved with code generation.
+- ~~useResource$ has to be in a component$ which means we can't create custom use- methods for each query like you would in React. So instead I've opted to copying Qwiks `<Resource />` component. Its quite verbose but this can easily be solved with code generation.~~ This was wrong. I might have been an old version maybe but it seems to work now.
 
 ### TODO
 

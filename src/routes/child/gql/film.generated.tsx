@@ -13,12 +13,26 @@ import {
   UrqlOptionsContext,
 } from '../../../components/urql/urql-provider';
 
+/**
+ * This entire file should be auto generated for every query.
+ * See https://www.the-guild.dev/graphql/codegen
+ */
+
 export type Film = {
   film: {
     title: string;
     id: string;
   };
 };
+
+export const FilmQuery = gql`
+  query Query($id: ID!) {
+    film(id: $id) {
+      id
+      title
+    }
+  }
+`;
 
 export type FilmResourceProps = {
   vars: {
@@ -29,36 +43,22 @@ export type FilmResourceProps = {
   onRejected$?: (reason: any) => JSXNode;
 };
 
-/**
- * This entire file should be auto generated for every query.
- * See https://www.the-guild.dev/graphql/codegen
- */
-export const FilmResource = component$((props: FilmResourceProps) => {
+export const useFilmQuery = (vars: { id: string }) => {
   const options = useContext(UrqlOptionsContext);
   const initialCacheState = useContext(UrqlCacheContext);
-  const vars = props.vars;
 
-  const resource = useResource$<OperationResult<Film, AnyVariables>>(
+  return useResource$<OperationResult<Film, AnyVariables>>(
     async ({ track, cleanup }) => {
       track(vars, 'id');
-
-      const FilmQuery = gql`
-        query Query($id: ID!) {
-          film(id: $id) {
-            id
-            title
-          }
-        }
-      `;
 
       const client = getClient(options, initialCacheState);
 
       const abortCtrl = new AbortController();
       cleanup(() => abortCtrl.abort());
 
-      console.log('Running query');
+      console.log('Running query2');
       const res = await client
-        .query<Film>(FilmQuery, vars, {
+        .query(FilmQuery, vars, {
           fetch: fetchWithAbort(abortCtrl),
         })
         .toPromise();
@@ -68,10 +68,15 @@ export const FilmResource = component$((props: FilmResourceProps) => {
       return res;
     }
   );
+};
+
+export const FilmResource = component$((props: FilmResourceProps) => {
+  const vars = props.vars;
+  const value = useFilmQuery(vars);
 
   return (
     <Resource
-      value={resource}
+      value={value}
       onPending={props.onPending$}
       onRejected={props.onRejected$}
       onResolved={props.onResolved$}
