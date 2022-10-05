@@ -62,7 +62,7 @@ export default component$(() => {
           Add film title to show ID:
           <input type='text' value={storeB.input.title} ref={titleRef} />
           <button
-            onKeyUp$={() =>
+            onClick$={() =>
               (storeB.input.title = (
                 titleRef.current as HTMLInputElement
               ).value)
