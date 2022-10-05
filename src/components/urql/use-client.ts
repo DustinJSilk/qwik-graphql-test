@@ -17,7 +17,7 @@ export function newClient(options: ClientOptions, store: {}) {
   });
 }
 
-export function getClient(options: ClientOptions, store: {}) {
+export function useClient(options: ClientOptions, store: {}) {
   let client: Client | undefined = undefined;
 
   if (isServer || (!isServer && !(window as any).__urqlClient)) {

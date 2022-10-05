@@ -1,8 +1,8 @@
 import { useContext, useResource$ } from '@builder.io/qwik';
 import { AnyVariables, OperationResult, TypedDocumentNode } from '@urql/core';
 import { fetchWithAbort } from './fetch-with-abort';
-import { getClient } from './get-client';
 import { UrqlCacheContext, UrqlOptionsContext } from './urql-provider';
+import { useClient } from './use-client';
 
 export const useQuery = <Variables extends AnyVariables, Data = any>(
   query: Omit<TypedDocumentNode<Data, Variables>, '__apiType'> & {
@@ -19,7 +19,7 @@ export const useQuery = <Variables extends AnyVariables, Data = any>(
         track(vars);
       }
 
-      const client = getClient(options, initialCacheState);
+      const client = useClient(options, initialCacheState);
 
       const abortCtrl = new AbortController();
       cleanup(() => abortCtrl.abort());
