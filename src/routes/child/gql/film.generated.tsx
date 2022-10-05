@@ -1,5 +1,5 @@
 import { component$, JSXNode, Resource } from '@builder.io/qwik';
-import { AnyVariables, gql, OperationResult } from '@urql/core';
+import { gql, OperationResult } from '@urql/core';
 import { useQuery } from '~/components/urql/use-query';
 
 /**
@@ -7,15 +7,19 @@ import { useQuery } from '~/components/urql/use-query';
  * See https://www.the-guild.dev/graphql/codegen
  */
 
-export type Film = {
+export type FilmQueryResponse = {
   film: {
     title: string;
     id: string;
   };
 };
 
+export type FilmQueryVars = {
+  id: string;
+};
+
 export const FilmQuery = gql`
-  query Query($id: String!) {
+  query Film($id: String!) {
     film(id: $id) {
       id
       title
@@ -23,15 +27,15 @@ export const FilmQuery = gql`
   }
 `;
 
-export const useFilmQuery = (vars: { id: string }) => {
+export const useFilmQuery = (vars: FilmQueryVars) => {
   return useQuery(FilmQuery, vars);
 };
 
 export type FilmResourceProps = {
-  vars: {
-    id: string;
-  };
-  onResolved$: (value: OperationResult<Film, AnyVariables>) => JSXNode;
+  vars: FilmQueryVars;
+  onResolved$: (
+    value: OperationResult<FilmQueryResponse, FilmQueryVars>
+  ) => JSXNode;
   onPending$?: () => JSXNode;
   onRejected$?: (reason: any) => JSXNode;
 };
