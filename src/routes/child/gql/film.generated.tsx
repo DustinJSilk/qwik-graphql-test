@@ -23,6 +23,10 @@ export const FilmQuery = gql`
   }
 `;
 
+export const useFilmQuery = (vars: { id: string }) => {
+  return useQuery(FilmQuery, vars);
+};
+
 export type FilmResourceProps = {
   vars: {
     id: string;
@@ -30,10 +34,6 @@ export type FilmResourceProps = {
   onResolved$: (value: OperationResult<Film, AnyVariables>) => JSXNode;
   onPending$?: () => JSXNode;
   onRejected$?: (reason: any) => JSXNode;
-};
-
-export const useFilmQuery = (vars: { id: string }) => {
-  return useQuery(FilmQuery, vars);
 };
 
 export const FilmResource = component$((props: FilmResourceProps) => {

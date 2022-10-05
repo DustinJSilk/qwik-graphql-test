@@ -14,7 +14,7 @@ This requires a pre-release version of Qwik. Manually build a production version
 
 Need to figure a few things out before I clean up and get things added to Urql/Qwik or a separate library.
 
-- Do we need to track each primitive in the useResource$ or can we track the entire store?
+- ~~Do we need to track each primitive in the useResource$ or can we track the entire store?~~ Seems to work, need to test recursion
 - Authentication & sharing a header between frontend and server
 - Mutations
 - Optimistic response
