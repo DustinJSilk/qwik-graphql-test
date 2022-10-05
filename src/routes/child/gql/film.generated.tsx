@@ -1,17 +1,6 @@
-import {
-  component$,
-  JSXNode,
-  Resource,
-  useContext,
-  useResource$,
-} from '@builder.io/qwik';
+import { component$, JSXNode, Resource } from '@builder.io/qwik';
 import { AnyVariables, gql, OperationResult } from '@urql/core';
-import { fetchWithAbort } from '~/components/urql/fetch-with-abort';
-import { getClient } from '../../../components/urql/get-client';
-import {
-  UrqlCacheContext,
-  UrqlOptionsContext,
-} from '../../../components/urql/urql-provider';
+import { useQuery } from '~/components/urql/use-query';
 
 /**
  * This entire file should be auto generated for every query.
@@ -44,30 +33,7 @@ export type FilmResourceProps = {
 };
 
 export const useFilmQuery = (vars: { id: string }) => {
-  const options = useContext(UrqlOptionsContext);
-  const initialCacheState = useContext(UrqlCacheContext);
-
-  return useResource$<OperationResult<Film, AnyVariables>>(
-    async ({ track, cleanup }) => {
-      track(vars, 'id');
-
-      const client = getClient(options, initialCacheState);
-
-      const abortCtrl = new AbortController();
-      cleanup(() => abortCtrl.abort());
-
-      console.log('Running query2');
-      const res = await client
-        .query(FilmQuery, vars, {
-          fetch: fetchWithAbort(abortCtrl),
-        })
-        .toPromise();
-
-      delete res.operation.context.fetch;
-
-      return res;
-    }
-  );
+  return useQuery(FilmQuery, vars);
 };
 
 export const FilmResource = component$((props: FilmResourceProps) => {
