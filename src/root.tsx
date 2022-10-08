@@ -1,4 +1,5 @@
 import {
+  $,
   component$,
   useClientEffect$,
   useContextProvider,
@@ -27,14 +28,13 @@ if (apps.length === 0) {
 }
 
 export default component$(() => {
-  registerClientFactory(clientFactory);
+  const factory = useStore({ client: $(clientFactory) });
 
-  // Adding this is the only way to make sure the frontend has access to the
-  // Urql factory, however, it eagerly loads all dependencies. I need to find
-  // a way to lazy load this only when the client needs it.
+  registerClientFactory(factory);
+
   useClientEffect$(
     () => {
-      registerClientFactory(clientFactory);
+      registerClientFactory(factory);
     },
     { eagerness: 'load' }
   );

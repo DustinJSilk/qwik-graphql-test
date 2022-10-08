@@ -1,3 +1,4 @@
+import { QRL } from '@builder.io/qwik';
 import { Client } from '@urql/core';
 
 /**
@@ -7,11 +8,13 @@ import { Client } from '@urql/core';
  */
 export type ClientFactory = (ssrStore: {}, authToken?: string) => Client;
 
-let clientFactory: ClientFactory | undefined;
+let clientFactory: QRL<ClientFactory> | undefined;
 
 /** Registers a factory for creating new Urql clients */
-export const registerClientFactory = (factory: ClientFactory) => {
-  clientFactory = factory;
+export const registerClientFactory = (factory: {
+  client: QRL<ClientFactory>;
+}) => {
+  clientFactory = factory.client;
 };
 
 /**

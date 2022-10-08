@@ -2,11 +2,11 @@ import { isServer } from '@builder.io/qwik/build';
 import { Client } from '@urql/core';
 import { newClient } from './client-factory';
 
-export function getClient(ssrStore: {}, authToken?: string) {
+export const getClient = async (ssrStore: {}, authToken?: string) => {
   let client: Client | undefined = undefined;
 
   if (isServer || (!isServer && !(window as any).__urqlClient)) {
-    client = newClient(ssrStore, authToken);
+    client = await newClient(ssrStore, authToken);
 
     if (!isServer) {
       (window as any).__urqlClient = client;
@@ -20,4 +20,4 @@ export function getClient(ssrStore: {}, authToken?: string) {
   }
 
   return client;
-}
+};

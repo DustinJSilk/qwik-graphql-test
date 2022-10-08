@@ -20,7 +20,7 @@ export const useQuery = <Variables extends AnyVariables, Data = any>(
         track(vars);
       }
 
-      const client = getClient(initialCacheState, token);
+      const client = await getClient(initialCacheState, token);
 
       const abortCtrl = new AbortController();
       cleanup(() => abortCtrl.abort());

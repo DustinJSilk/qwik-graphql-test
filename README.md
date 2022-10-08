@@ -31,7 +31,7 @@ Run firebase auth emulator to simulate an authentication server
 
 ### TODO
 
-- The client needs to be lazy loaded, but with a factory. Adding a useClientEffect to the root eagerly loads all dependencies. Not adding a useClientEffect means the libraries aren't ever loaded.
+- Find a way to make the registerClientFactory a bit nicer to work with
 - Need a better way to track entire input objects for changes in `useResource$`. Recursive doesn't work well enough (unless signals have improved this now)
 - Cache reactivity + Optimistic response
 - Make sure we support a refresh token
