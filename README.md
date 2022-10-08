@@ -2,22 +2,36 @@
 
 Attempts at using GraphQL with Qwik.
 
-This requires a pre-release version of Qwik. Manually build a production version and update your node modules.
+This requires a pre-release version of Qwik and the i18n pr (until its merged of course)
+`git checkout pr-i18n`
+`git rebase origin/main`
+`yarn build.full`
+`yarn build.qwik-city`
 
-Run the server using `node ./server/main.js` which supports some basic queries and mutations
+Then copy `packages/qwik/dist` and `packages/qwik-city/lib` to your node_modules to replace `qwik` and `qwik-city`
+
+Run the test graphql server which supports some basic queries and mutations
+`yarn server`
+
+Run firebase auth emulator to simulate an authentication server
+`yarn emulator`
+
+### Successes
+
+- Queries and mutations work on client and during SSR
+- Server state is shared to the frontend
+- Authentication is working
+- Auth tokens are forwarded to the API server on client and during SSR
+- The Urql folder is almost ready to be a third party package either standalone or part of Urql or even Qwik. For issues to iron out (clientFactory / better auth)
 
 ### Limitations
 
-- The GraphQL client cant be serialized so it can't be accessible to the whole app using Qwik context. Currently I'm storing it in the Window on the frontend and recreating it with each request on the server
 - To share the cache between the frontend/backend we need the data saved in a Qwik store. I've copied Urqls ssrExchange and added an option to inject a store.
-- The mutation example uses a deep object input, the only way i could get the query to rerun was to update the `input` field in the store, not just the title. The track method might not work recursively.
+- The mutation example uses a deep object as the mutation input. The only way i could get the query to re-run when the input changes was to update the `input` field in the store, **not the title beneath.** The track method might not work recursively.
 
 ### TODO
 
-Need to figure a few things out before I clean up and get things added to Urql/Qwik or a separate library.
-
-- ~~Do we need to track each primitive in the useResource$ or can we track the entire store?~~ Seems to work, need to test recursion
-- Authentication & sharing a header between frontend and server
-- Need to be able to create the gql client in the root app to allow custom exchanges. Stop using context + provide
-- Cache reactivity
-- Optimistic response (pretty much relyings on a reactive cache)
+- The client needs to be lazy loaded, but with a factory. Adding a useClientEffect to the root eagerly loads all dependencies. Not adding a useClientEffect means the libraries aren't ever loaded.
+- Need a better way to track entire input objects for changes in `useResource$`. Recursive doesn't work well enough (unless signals have improved this now)
+- Cache reactivity + Optimistic response
+- Make sure we support a refresh token

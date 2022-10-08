@@ -1,17 +1,18 @@
 import { useContext, useResource$ } from '@builder.io/qwik';
 import { AnyVariables, OperationResult, TypedDocumentNode } from '@urql/core';
+import { AuthStateContext } from '~/contexts';
 import { fetchWithAbort } from './fetch-with-abort';
-import { UrqlCacheContext, UrqlOptionsContext } from './urql-provider';
-import { useClient } from './use-client';
+import { getClient } from './get-client';
+import { UrqlCacheContext } from './urql-provider';
 
-export const useMutation = <Variables extends AnyVariables, Data = any>(
+export const useQuery = <Variables extends AnyVariables, Data = any>(
   query: Omit<TypedDocumentNode<Data, Variables>, '__apiType'> & {
     kind: string;
   },
   vars: Variables
 ) => {
-  const options = useContext(UrqlOptionsContext);
   const initialCacheState = useContext(UrqlCacheContext);
+  const { token } = useContext(AuthStateContext);
 
   return useResource$<OperationResult<Data, Variables>>(
     async ({ track, cleanup }) => {
@@ -19,13 +20,13 @@ export const useMutation = <Variables extends AnyVariables, Data = any>(
         track(vars);
       }
 
-      const client = useClient(options, initialCacheState);
+      const client = getClient(initialCacheState, token);
 
       const abortCtrl = new AbortController();
       cleanup(() => abortCtrl.abort());
 
       const res = await client
-        .mutation<Data, Variables>(query, vars, {
+        .query<Data, Variables>(query, vars, {
           fetch: fetchWithAbort(abortCtrl),
         })
         .toPromise();

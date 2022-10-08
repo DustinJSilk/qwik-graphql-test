@@ -1,6 +1,6 @@
 import { component$, JSXNode, Resource } from '@builder.io/qwik';
 import { gql, OperationResult } from '@urql/core';
-import { useQuery } from '~/components/urql/use-query';
+import { useQuery } from '~/urql/use-query';
 
 /**
  * This entire file should be auto generated for every query.

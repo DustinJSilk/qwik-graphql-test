@@ -45,6 +45,11 @@ var app = express();
 
 app.use(cors());
 
+app.use((req) => {
+  console.log('Auth token received: ', req.headers['authorization']);
+  req.next();
+});
+
 app.use(
   '/graphql',
   graphqlHTTP({
