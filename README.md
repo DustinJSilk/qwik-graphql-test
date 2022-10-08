@@ -22,7 +22,7 @@ Run firebase auth emulator to simulate an authentication server
 - Server state is shared to the frontend
 - Authentication is working
 - Auth tokens are forwarded to the API server on client and during SSR
-- The Urql folder is almost ready to be a third party package either standalone or part of Urql or even Qwik. For issues to iron out (clientFactory / better auth)
+- The Urql folder is almost ready to be a third party package either standalone or part of Urql or even Qwik.
 
 ### Limitations
 
@@ -31,7 +31,7 @@ Run firebase auth emulator to simulate an authentication server
 
 ### TODO
 
-- Find a way to make the registerClientFactory a bit nicer to work with
 - Need a better way to track entire input objects for changes in `useResource$`. Recursive doesn't work well enough (unless signals have improved this now)
+- The current auth state context doesnt work as a third party library
 - Cache reactivity + Optimistic response
 - Make sure we support a refresh token

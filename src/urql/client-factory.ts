@@ -1,4 +1,4 @@
-import { QRL } from '@builder.io/qwik';
+import { QRL, useClientEffect$, useStore } from '@builder.io/qwik';
 import { Client } from '@urql/core';
 
 /**
@@ -10,11 +10,23 @@ export type ClientFactory = (ssrStore: {}, authToken?: string) => Client;
 
 let clientFactory: QRL<ClientFactory> | undefined;
 
+/** ESLint complains without this function to store */
+export const storeFactoryQRL = (factory: QRL<ClientFactory>) => {
+  clientFactory = factory;
+};
+
 /** Registers a factory for creating new Urql clients */
-export const registerClientFactory = (factory: {
-  client: QRL<ClientFactory>;
-}) => {
-  clientFactory = factory.client;
+export const registerClientFactory = (fn: QRL<ClientFactory>) => {
+  const factory = useStore({ client: fn });
+
+  storeFactoryQRL(factory.client);
+
+  useClientEffect$(
+    () => {
+      storeFactoryQRL(factory.client);
+    },
+    { eagerness: 'load' }
+  );
 };
 
 /**
@@ -25,7 +37,7 @@ export const newClient = (ssrStore: {}, authToken?: string) => {
   if (!clientFactory) {
     throw new Error(
       'A ClientFactory has not been registered. Add ' +
-        '`registerClient(() => createClient({ ... })) to root.tsx`'
+        '`registerClientFactory($(() => createClient({ ... })) to root.tsx`'
     );
   }
 

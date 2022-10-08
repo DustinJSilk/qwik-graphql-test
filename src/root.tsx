@@ -1,10 +1,4 @@
-import {
-  $,
-  component$,
-  useClientEffect$,
-  useContextProvider,
-  useStore,
-} from '@builder.io/qwik';
+import { $, component$, useContextProvider, useStore } from '@builder.io/qwik';
 import {
   QwikCity,
   RouterOutlet,
@@ -28,16 +22,7 @@ if (apps.length === 0) {
 }
 
 export default component$(() => {
-  const factory = useStore({ client: $(clientFactory) });
-
-  registerClientFactory(factory);
-
-  useClientEffect$(
-    () => {
-      registerClientFactory(factory);
-    },
-    { eagerness: 'load' }
-  );
+  registerClientFactory($(clientFactory));
 
   // TODO: Verify session cookie and convert to token
   const session = useCookie('session');
