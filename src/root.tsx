@@ -1,4 +1,9 @@
-import { component$, useContextProvider, useStore } from '@builder.io/qwik';
+import {
+  component$,
+  useClientEffect$,
+  useContextProvider,
+  useStore,
+} from '@builder.io/qwik';
 import {
   QwikCity,
   RouterOutlet,
@@ -23,6 +28,16 @@ if (apps.length === 0) {
 
 export default component$(() => {
   registerClientFactory(clientFactory);
+
+  // Adding this is the only way to make sure the frontend has access to the
+  // Urql factory, however, it eagerly loads all dependencies. I need to find
+  // a way to lazy load this only when the client needs it.
+  useClientEffect$(
+    () => {
+      registerClientFactory(clientFactory);
+    },
+    { eagerness: 'load' }
+  );
 
   // TODO: Verify session cookie and convert to token
   const session = useCookie('session');
