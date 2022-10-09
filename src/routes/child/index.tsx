@@ -36,6 +36,7 @@ export default component$(() => {
 
       <ul>
         <li>
+          <h3>Query</h3>
           Query film by ID:
           <input
             type='text'
@@ -56,6 +57,7 @@ export default component$(() => {
         </li>
 
         <li>
+          <h3>Mutation</h3>
           Add film title to show ID:
           <input type='text' value={storeB.input.title} ref={titleRef} />
           <button

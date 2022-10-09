@@ -31,7 +31,4 @@ Run firebase auth emulator to simulate an authentication server
 
 ### TODO
 
-- Need a better way to track entire input objects for changes in `useResource$`. Recursive doesn't work well enough (unless signals have improved this now)
-- The current auth state context doesnt work as a third party library
 - Cache reactivity + Optimistic response
-- Make sure we support a refresh token

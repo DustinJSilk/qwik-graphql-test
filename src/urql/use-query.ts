@@ -1,9 +1,8 @@
 import { useContext, useResource$ } from '@builder.io/qwik';
 import { AnyVariables, OperationResult, TypedDocumentNode } from '@urql/core';
-import { AuthStateContext } from '~/contexts';
 import { fetchWithAbort } from './fetch-with-abort';
 import { getClient } from './get-client';
-import { UrqlCacheContext } from './urql-provider';
+import { UrqlAuthContext, UrqlCacheContext } from './urql-provider';
 
 export const useQuery = <Variables extends AnyVariables, Data = any>(
   query: Omit<TypedDocumentNode<Data, Variables>, '__apiType'> & {
@@ -12,7 +11,7 @@ export const useQuery = <Variables extends AnyVariables, Data = any>(
   vars: Variables
 ) => {
   const initialCacheState = useContext(UrqlCacheContext);
-  const { token } = useContext(AuthStateContext);
+  const tokens = useContext(UrqlAuthContext);
 
   return useResource$<OperationResult<Data, Variables>>(
     async ({ track, cleanup }) => {
@@ -20,7 +19,7 @@ export const useQuery = <Variables extends AnyVariables, Data = any>(
         track(vars);
       }
 
-      const client = await getClient(initialCacheState, token);
+      const client = await getClient(initialCacheState, tokens);
 
       const abortCtrl = new AbortController();
       cleanup(() => abortCtrl.abort());

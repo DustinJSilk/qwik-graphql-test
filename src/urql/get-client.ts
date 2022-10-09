@@ -1,8 +1,9 @@
 import { isServer } from '@builder.io/qwik/build';
 import { Client } from '@urql/core';
 import { newClient } from './client-factory';
+import { UrqlAuthTokens } from './types';
 
-export const getClient = async (ssrStore: {}, authToken?: string) => {
+export const getClient = async (ssrStore: {}, authToken?: UrqlAuthTokens) => {
   let client: Client | undefined = undefined;
 
   if (isServer || (!isServer && !(window as any).__urqlClient)) {

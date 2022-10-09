@@ -8,19 +8,20 @@ import {
 import { authExchange } from '@urql/exchange-auth';
 import { cacheExchange } from '@urql/exchange-graphcache';
 import { ssrExchange } from './urql/ssr-exchange';
+import { UrqlAuthTokens } from './urql/types';
 
-export const clientFactory = (ssrStore: {}, token?: string) => {
+export const clientFactory = (ssrStore: {}, authTokens?: UrqlAuthTokens) => {
   const ssr = ssrExchange({
     isClient: !isServer,
     initialState: isServer ? undefined : ssrStore,
     store: ssrStore,
   });
 
-  const auth = authExchange<{ token: string }>({
+  const auth = authExchange<UrqlAuthTokens>({
     getAuth: async ({ authState }) => {
       if (!authState) {
-        if (token) {
-          return { token };
+        if (authTokens) {
+          return authTokens;
         }
 
         return null;
