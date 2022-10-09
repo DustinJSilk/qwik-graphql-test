@@ -1,6 +1,6 @@
 import { component$, JSXNode, Resource } from '@builder.io/qwik';
 import { gql, OperationResult } from '@urql/core';
-import { useMutation } from '~/urql/use-mutation';
+import { useMutation } from 'qwik-urql';
 
 /**
  * This entire file should be auto generated for every query.

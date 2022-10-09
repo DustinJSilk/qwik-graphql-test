@@ -5,8 +5,8 @@ import {
   useStylesScoped$,
 } from '@builder.io/qwik';
 import { DocumentHead, Link } from '@builder.io/qwik-city';
-import { AddFilmResource } from './gql/add-film.generated';
-import { FilmResource } from './gql/film.generated';
+import { AddFilmResource } from './gql/add-film';
+import { FilmResource } from './gql/film';
 
 export default component$(() => {
   useStylesScoped$(`

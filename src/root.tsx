@@ -6,11 +6,10 @@ import {
 } from '@builder.io/qwik-city';
 import { apps } from 'firebase-admin';
 import { initializeApp } from 'firebase-admin/app';
+import { registerClientFactory, UrqlProvider } from 'qwik-urql';
 import { clientFactory } from './client';
 import { RouterHead } from './components/router-head/router-head';
 import { useCookie } from './hooks/use-cookie';
-import { registerClientFactory } from './urql/client-factory';
-import { UrqlProvider } from './urql/urql-provider';
 
 import { AuthStateContext } from './contexts';
 import './global.css';

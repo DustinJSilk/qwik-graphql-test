@@ -7,8 +7,8 @@ import {
 } from '@urql/core';
 import { authExchange } from '@urql/exchange-auth';
 import { cacheExchange } from '@urql/exchange-graphcache';
+import { UrqlAuthTokens } from 'qwik-urql';
 import { ssrExchange } from './urql/ssr-exchange';
-import { UrqlAuthTokens } from './urql/types';
 
 export const clientFactory = (ssrStore: {}, authTokens?: UrqlAuthTokens) => {
   const ssr = ssrExchange({
