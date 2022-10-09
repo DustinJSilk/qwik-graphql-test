@@ -5,7 +5,7 @@ import { getClient } from './get-client';
 import { UrqlAuthContext, UrqlCacheContext } from './urql-provider';
 
 export const useMutation = <Variables extends AnyVariables, Data = any>(
-  query: Omit<TypedDocumentNode<Data, Variables>, '__apiType'> & {
+  query: TypedDocumentNode<Data, Variables> & {
     kind: string;
   },
   vars: Variables

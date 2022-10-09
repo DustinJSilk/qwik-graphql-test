@@ -31,4 +31,5 @@ Run firebase auth emulator to simulate an authentication server
 
 ### TODO
 
-- Cache reactivity + Optimistic response
+- Cache reactivity + optimistic response
+- Code generators
